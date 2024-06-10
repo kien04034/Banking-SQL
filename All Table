@@ -1,0 +1,65 @@
+CREATE TABLE "CaNhan" (
+  "uid" SERIAL PRIMARY KEY,
+  "CMND" VARCHAR(20),
+  "DC" VARCHAR(255),
+  "Ho" VARCHAR(50),
+  "Ten" VARCHAR(50),
+  "Phai" VARCHAR(10),
+  "SoDT" VARCHAR(15)
+);
+
+CREATE TABLE "KhachHang" (
+  "uid" INT,
+  "MaKH" SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "ChiNhanh" (
+  "MaCN" SERIAL PRIMARY KEY,
+  "DiaChi" VARCHAR(255),
+  "TenCN" VARCHAR(100)
+);
+
+CREATE TABLE "NhanVien" (
+  "MaCN" INT,
+  "uid" INT,
+  "maNV" SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "TaiKhoan" (
+  "SoTK" SERIAL PRIMARY KEY,
+  "soDu" DECIMAL(15,2),
+  "ngaymoTK" DATE,
+  "maKH" INT
+);
+
+CREATE TABLE "KieuGD" (
+  "KieuID" SERIAL PRIMARY KEY,
+  "TenKieuGD" VARCHAR(50)
+);
+
+CREATE TABLE "GiaoDich" (
+  "MaGD" SERIAL PRIMARY KEY,
+  "SoTK" INT,
+  "SoTKNhan" INT,
+  "SoTien" DECIMAL(15,2),
+  "KieuID" INT,
+  "ngayGD" DATE,
+  "maNV" INT,
+  "maCN" INT
+);
+
+ALTER TABLE "KhachHang" ADD FOREIGN KEY ("uid") REFERENCES "CaNhan" ("uid");
+
+ALTER TABLE "NhanVien" ADD FOREIGN KEY ("uid") REFERENCES "CaNhan" ("uid");
+
+ALTER TABLE "NhanVien" ADD FOREIGN KEY ("MaCN") REFERENCES "ChiNhanh" ("MaCN");
+
+ALTER TABLE "TaiKhoan" ADD FOREIGN KEY ("maKH") REFERENCES "KhachHang" ("MaKH");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("SoTK") REFERENCES "TaiKhoan" ("SoTK");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("KieuID") REFERENCES "KieuGD" ("KieuID");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("maNV") REFERENCES "NhanVien" ("maNV");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("maCN") REFERENCES "ChiNhanh" ("MaCN");
