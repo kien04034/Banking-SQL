@@ -1,0 +1,177 @@
+CREATE TABLE "CaNhan" (
+  "uid"  SERIAL PRIMARY KEY,
+  "CMND" VARCHAR(20),
+  "DC" VARCHAR(255),
+  "Ho" VARCHAR(50),
+  "Ten" VARCHAR(50),
+  "Phai" VARCHAR(10),
+  "SoDT" VARCHAR(15)
+);
+
+CREATE TABLE "KhachHang" (
+  "uid" INT,
+  "MaKH" SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "ChiNhanh" (
+  "MaCN" SERIAL PRIMARY KEY,
+  "DiaChi" VARCHAR(255),
+  "TenCN" VARCHAR(100)
+);
+
+CREATE TABLE "NhanVien" (
+  "MaCN" INT,
+  "uid" INT,
+  "maNV" SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "TaiKhoan" (
+  "SoTK" SERIAL PRIMARY KEY,
+  "soDu" DECIMAL(15,2),
+  "ngaymoTK" DATE,
+  "maKH" INT
+);
+
+CREATE TABLE "KieuGD" (
+  "KieuID" SERIAL PRIMARY KEY,
+  "TenKieuGD" VARCHAR(50)
+);
+
+CREATE TABLE "GiaoDich" (
+  "MaGD" SERIAL PRIMARY KEY,
+  "SoTK" INT,
+  "SoTKNhan" INT,
+  "SoTien" DECIMAL(15,2),
+  "KieuID" INT,
+  "ngayGD" DATE,
+  "maNV" INT,
+  "maCN" INT
+);
+
+ALTER TABLE "KhachHang" ADD FOREIGN KEY ("uid") REFERENCES "CaNhan" ("uid");
+
+ALTER TABLE "NhanVien" ADD FOREIGN KEY ("uid") REFERENCES "CaNhan" ("uid");
+
+ALTER TABLE "NhanVien" ADD FOREIGN KEY ("MaCN") REFERENCES "ChiNhanh" ("MaCN");
+
+ALTER TABLE "TaiKhoan" ADD FOREIGN KEY ("maKH") REFERENCES "KhachHang" ("MaKH");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("SoTK") REFERENCES "TaiKhoan" ("SoTK");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("KieuID") REFERENCES "KieuGD" ("KieuID");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("maNV") REFERENCES "NhanVien" ("maNV");
+
+ALTER TABLE "GiaoDich" ADD FOREIGN KEY ("maCN") REFERENCES "ChiNhanh" ("MaCN");
+
+INSERT INTO CaNhan (uid, CMND, DC, Ho, Ten, Phai, SoDT) VALUES
+(1000, '123456789', '123 ABC Street', 'Nguyen', 'Van A', 'Nam', '0123456789'),
+(1001, '987654321', '456 DEF Street', 'Tran', 'Thi B', 'Nu', '0987654321'),
+(1002, '111222333', '789 GHI Street', 'Le', 'Van C', 'Nam', '0111222333'),
+(1003, '444555666', '321 JKL Street', 'Pham', 'Thi D', 'Nu', '0444555666'),
+(1004, '777888999', '654 MNO Street', 'Hoang', 'Van E', 'Nam', '0777888999'),
+(1005, '222333444', '123 PQR Street', 'Vu', 'Thi F', 'Nu', '0222333444'),
+(1006, '555666777', '456 STU Street', 'Bui', 'Van G', 'Nam', '0555666777'),
+(1007, '888999000', '789 VWX Street', 'Dang', 'Thi H', 'Nu', '0888999000'),
+(1008, '000111222', '321 YZ Street', 'Ngo', 'Van I', 'Nam', '0001112222'),
+(1009, '333444555', '654 ABCD Street', 'Duong', 'Thi J', 'Nu', '0333444555'),
+(1010, '666777888', '123 EFGH Street', 'Dao', 'Van K', 'Nam', '0666777888'),
+(1011, '999000111', '456 IJKL Street', 'Quach', 'Thi L', 'Nu', '0999000111'),
+(1012, '111333555', '789 MNOP Street', 'Ly', 'Van M', 'Nam', '0111333555'),
+(1013, '444666888', '321 QRST Street', 'Cao', 'Thi N', 'Nu', '0444666888'),
+(1014, '777999000', '654 UVWX Street', 'Vuong', 'Van O', 'Nam', '0777999000'),
+(1015, '222444666', '123 YZAB Street', 'Nguyen', 'Thi P', 'Nu', '0222444666'),
+(1016, '555777999', '456 BCDE Street', 'Tran', 'Van Q', 'Nam', '0555777999'),
+(1017, '888000222', '789 FGHI Street', 'Le', 'Thi R', 'Nu', '0888000222'),
+(1018, '111444777', '321 JKLM Street', 'Pham', 'Van S', 'Nam', '0111444777'),
+(1019, '444777000', '654 NOPQ Street', 'Hoang', 'Thi T', 'Nu', '0444777000');
+
+INSERT INTO NhanVien (MaCN, uid) VALUES
+(1, 1000),
+(2, 1001),
+(3, 1002),
+(4, 1003),
+(5, 1004);
+
+INSERT INTO KhachHang (uid) VALUES
+(1005),
+(1006),
+(1007),
+(1008),
+(1009),
+(1010),
+(1011),
+(1012),
+(1013),
+(1014),
+(1015),
+(1016),
+(1017),
+(1018),
+(1019);
+
+
+INSERT INTO ChiNhanh (DiaChi, TenCN) VALUES
+('123 Nguyen Trai, Hanoi', 'ChiNhanh Hanoi 1'),
+('456 Le Loi, HCMC', 'ChiNhanh HCMC 1'),
+('789 Hai Ba Trung, Da Nang', 'ChiNhanh Da Nang 1'),
+('321 Tran Hung Dao, Can Tho', 'ChiNhanh Can Tho 1'),
+('654 Phan Chu Trinh, Hai Phong', 'ChiNhanh Hai Phong 1');
+
+
+INSERT INTO TaiKhoan (SoTK, soDu, ngaymoTK, maKH) VALUES
+(10001, 50000000, '2024-06-01', 1),
+(10002, 40000000, '2024-06-02', 2),
+(10003, 30000000, '2024-06-03', 3),
+(10004, 20000000, '2024-06-04', 4),
+(10005, 15000000, '2024-06-05', 5),
+(10006, 10000000, '2024-06-06', 6),
+(10007, 9000000, '2024-06-07', 7),
+(10008, 8000000, '2024-06-08', 8),
+(10009, 7000000, '2024-06-09', 9),
+(10010, 6000000, '2024-06-10', 10),
+(10011, 5000000, '2024-06-11', 11),
+(10012, 4000000, '2024-06-12', 12),
+(10013, 3000000, '2024-06-13', 13),
+(10014, 2000000, '2024-06-14', 14),
+(10015, 1500000, '2024-06-15', 15),
+(10016, 1000000, '2024-06-16', 1),
+(10017, 900000, '2024-06-17', 2),
+(10018, 800000, '2024-06-18', 3),
+(10019, 700000, '2024-06-19', 4),
+(10020, 600000, '2024-06-20', 5);
+
+INSERT INTO GiaoDich (SoTK, SoTKNhan, SoTien, KieuID, ngayGD, maNV, maCN) VALUES
+(10001, NULL, 1000000.00, 2, '2024-06-01', 1, 1),
+(10002, 10001, 2000000.00, 1, '2024-06-05', 2, NULL),
+(10003, NULL, 1500000.00, 2, '2024-06-10', 3, 2),
+(10004, 10003, 3000000.00, 1, '2024-06-15', 4, NULL),
+(10005, NULL, 500000.00, 2, '2024-06-20', 5, 3),
+(10006, 10005, 800000.00, 1, '2024-06-25', 1, NULL),
+(10007, NULL, 700000.00, 2, '2024-07-01', 2, 4),
+(10008, 10007, 1000000.00, 1, '2024-07-05', 3, NULL),
+(10009, NULL, 200000.00, 2, '2024-07-10', 4, 5),
+(10010, 10009, 300000.00, 1, '2024-07-15', 5, NULL),
+(10011, NULL, 500000.00, 2, '2024-07-20', 1, 4),
+(10012, 10011, 800000.00, 1, '2024-07-25', 2, NULL),
+(10013, NULL, 700000.00, 2, '2024-08-01', 3, 3),
+(10014, 10013, 1000000.00, 1, '2024-08-05', 4, NULL),
+(10015, NULL, 200000.00, 2, '2024-08-10', 5, 2),
+(10016, 10015, 300000.00, 1, '2024-08-15', 1, NULL),
+(10017, NULL, 500000.00, 2, '2024-08-20', 2, 1),
+(10018, 10017, 800000.00, 1, '2024-08-25', 3, NULL),
+(10019, NULL, 700000.00, 2, '2024-09-01', 4, 2),
+(10020, 10019, 1000000.00, 1, '2024-09-05', 5, NULL),
+(10021, NULL, 100000.00, 3, '2024-06-21', 1, 3),
+(10022, NULL, 200000.00, 3, '2024-06-25', 2, 4),
+(10023, NULL, 300000.00, 3, '2024-06-29', 3, 5),
+(10024, NULL, 400000.00, 3, '2024-07-03', 4, 4),
+(10025, NULL, 500000.00, 3, '2024-07-07', 5, 3);
+
+
+INSERT INTO KieuGD (TenKieuGD) VALUES
+('Chuyển tiền'),
+('Rút tiền'),
+('Gửi tiền');
+
+
